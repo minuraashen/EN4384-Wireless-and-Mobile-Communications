@@ -1,0 +1,18 @@
+% Combine large-scale and small-scale fading
+N = 5000; d = logspace(0,3,N);
+h = (randn(1,N) + 1j*randn(1,N))/sqrt(2);
+shadow_dB = sigma*randn(1,N);
+shadow = 10.^(shadow_dB/10);
+PL = (d0./d).^n;
+Pr_combined = PL .* abs(h).^2 .* shadow;
+% Rayleigh fading
+% Shadowing in dB
+% Convert to linear
+% Path loss
+
+% Plot results
+figure;
+semilogx(d,10*log10(Pr_combined),'k.');
+xlabel('Distance (m)'); ylabel('Instantaneous Received Power (dB)');
+title('Combined Large- and Small-Scale Fading');
+grid on;

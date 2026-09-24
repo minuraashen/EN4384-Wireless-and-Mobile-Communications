@@ -1,0 +1,20 @@
+ % Parameters
+d0 = 1;                       % Reference distance [m]
+d = logspace(0,3,1000);       % Distance range: 1 to 1000 m
+n = 3.2;                      % Path loss exponent
+sigma = 6;                    % Shadowing std dev [dB]
+Pr0 =-30;                     % Reference received power [dBm]
+
+% Path Loss Model
+PL_d = Pr0- 10*n*log10(d/d0);
+shadow = sigma*randn(size(d));      % log-normal shadowing (dB)
+Pr_d = PL_d + shadow;
+
+% Plot
+figure;
+semilogx(d, PL_d, 'b', 'LineWidth', 1.5); hold on;
+semilogx(d, Pr_d, '.', 'Color', [0.8 0.2 0.2]);
+xlabel('Distance (m)'); ylabel('Received Power (dBm)');
+legend('Mean Path Loss','With Shadowing');
+title('Large-Scale Path Loss and Log-Normal Shadowing');
+grid on;

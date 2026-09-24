@@ -1,0 +1,33 @@
+% Parameters
+N = 1e5;      % Number of samples
+K = 6;        % Rician K-factor (ratio of LOS to scattered power)
+
+% Rayleigh fading (no LOS)
+h_rayleigh = (randn(N,1) + 1j*randn(N,1))/sqrt(2);
+
+% Rician fading (with LOS)
+s = sqrt(K/(K+1));
+sigma_r = sqrt(1/(2*(K+1)));
+h_rician = s + sigma_r*(randn(N,1)+1j*randn(N,1));
+
+% Envelope
+r_rayleigh = abs(h_rayleigh);
+r_rician = abs(h_rician);
+
+% Plot histograms
+figure;
+subplot(2,1,1);
+histogram(r_rayleigh,50,'Normalization','pdf');
+
+hold on;
+x = linspace(0,3,200);
+pdf_ray = x.*exp(-x.^2/2);
+plot(x,pdf_ray,'r','LineWidth',1.5);
+title('Rayleigh Fading Amplitude PDF'); xlabel('Amplitude'); ylabel('PDF');
+
+subplot(2,1,2);
+histogram(r_rician,50,'Normalization','pdf');
+hold on;
+pdf_ric = (x./sigma_r^2).*exp(-(x.^2+s^2)/(2*sigma_r^2)).*besseli(0, x*s/(sigma_r^2));
+plot(x,pdf_ric,'r','LineWidth',1.5);
+title('Rician Fading Amplitude PDF'); xlabel('Amplitude'); ylabel('PDF');

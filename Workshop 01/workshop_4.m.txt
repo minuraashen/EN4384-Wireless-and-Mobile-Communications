@@ -1,0 +1,7 @@
+fD = 100; Ts = 1e-3; N = 1000;
+t = (0:N-1)*Ts;
+h_t = (randn(1,N)+1j*randn(1,N))/sqrt(2);
+h_dopp = h_t .* exp(1j*2*pi*fD*t); % Doppler shift
+plot(t, 20*log10(abs(h_dopp)));
+xlabel('Time (s)'); ylabel('Envelope (dB)');
+title('Time-Varying Small-Scale Fading due to Doppler');
