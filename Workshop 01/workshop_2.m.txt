@@ -4,6 +4,7 @@ K = 6;        % Rician K-factor (ratio of LOS to scattered power)
 
 % Rayleigh fading (no LOS)
 h_rayleigh = (randn(N,1) + 1j*randn(N,1))/sqrt(2);
+sigma_ray = 0.5
 
 % Rician fading (with LOS)
 s = sqrt(K/(K+1));
@@ -21,7 +22,7 @@ histogram(r_rayleigh,50,'Normalization','pdf');
 
 hold on;
 x = linspace(0,3,200);
-pdf_ray = x.*exp(-x.^2/2);
+pdf_ray = (x./sigma).*exp(-x.^2/(2.*sigma));
 plot(x,pdf_ray,'r','LineWidth',1.5);
 title('Rayleigh Fading Amplitude PDF'); xlabel('Amplitude'); ylabel('PDF');
 
